@@ -4,3 +4,20 @@ plugins {
     id 'com.android.library' version '7.3.1' apply false
     id 'org.jetbrains.kotlin.android' version '1.7.20' apply false
 }
+ext {
+    AppKey = ''
+    BaseUrl = ''
+}
+def loadLocalConfig() {
+    def propertiesFile = file("config.properties")
+    if (!propertiesFile.exists()) {
+        println "Local properties don`t exist"
+        return
+    }
+    Properties config = new Properties()
+    config.load(propertiesFile.newInputStream())
+    this.AppKey = config.getProperty("APP_KEY")
+    this.BaseUrl = config.getProperty("BASE_URL")
+}
+
+loadLocalConfig()
